@@ -1,5 +1,5 @@
 # Calculator Game
-A game made by OrnitOnGithub and TheBiGame (not on github).
+A game made by OrnitOnGithub and TheBiGame (he's not on github).
 
 # Quick start guide
 - Install dependencies
