@@ -1,0 +1,44 @@
+[
+    {
+        "moves": 2,
+        "initial": 0,
+        "buttons": [["add", 1], ["add", 2]],
+        "goal": 3
+    },
+    {
+        "moves": 2,
+        "initial": 3,
+        "buttons": [["add", 2], ["mul", 2]],
+        "goal": 10
+    },
+    {
+        "moves": 4,
+        "initial": 0,
+        "buttons": [["add", 6], ["sub", 14], ["add", 5], ["mul", 2]],
+        "goal": 2
+    },
+    {
+        "moves": 3,
+        "initial": 6,
+        "buttons": [["add", 6], ["add", 10], ["mul", 9]],
+        "goal": 70
+    },
+    {
+        "moves": 3,
+        "initial": 7.5,
+        "buttons": [["add", 2.5], ["mul", 1.5], ["pow", 2]],
+        "goal": 225
+    },
+    {
+        "moves": 5,
+        "initial": 0,
+        "buttons": [["add", 5], ["mul", 3], ["mul", 2], ["cos", "()"]],
+        "goal": 0.5
+    },
+    {
+        "moves": 4,
+        "initial": 10,
+        "buttons": [["mul", 2], ["cos", "()"], ["mul", 3]],
+        "goal": -1 
+    }
+]
