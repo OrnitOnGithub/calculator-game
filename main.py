@@ -1,18 +1,16 @@
-# ----| IMPORTS |----
+import pygame
+import json
+import time
+import math
+import sys
 
-import pygame # Library used for graphics
-import json # To read from the JSON file
-import time # For eeping
-import math # Wonder what this is for...
-import sys # Used to exit the app
+# This code was made in a rush.
 
 
-# ----| PARAMETERS |----
+# Load settings file
 with open("data/settings.json", "r") as file: # Load settings from JSON file
     data = json.load(file)
     screenwidth = data["scr_width"]
-
-# ----| PYGAME SETUP |----
 
 # Initialize Pygame
 pygame.init()
@@ -23,18 +21,18 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Calculator Game")
 
 
-# ----| DEFINE CLASSES |----
-
 class Button:
     """
-    This class provides us with a Button template and some methods to do many things
-    like drawing it or checking input which would take ages instead.
+    This class is a Button template and has some methods to do many detect
+    clicks and drawing it.
+    
     Example usage:
+    ```python
     example_button_instance = Button(300, 300, 100, 100, (0, 255, 0), "Click me")
     example_button_instance.draw(screen) #draw button on screen
-    if example_button_instance.on_click() == True:
-        doSomething()
-
+    if example_button_instance.on_click(pygame.event.get()) == True:
+        soSomething()
+    ```
     """
     def __init__(self, x, y, width, height, color, text):
         self.rect = pygame.Rect(x, y, width, height)
@@ -49,16 +47,11 @@ class Button:
         screen.blit(text_surface, text_rect)
 
     def on_click(self, events):
-        # This somehow works.
-        # We have been graced by Allah.
         for event in events:
             if (event.type == pygame.MOUSEBUTTONDOWN) and (self.rect.collidepoint(event.pos)):
                 return True
             if (event == pygame.MOUSEBUTTONUP):
-                return True # Don't ask.
-
-
-# ----| DEFINE FUNCTIONS |----
+                return True
 
 def draw_rect(x, y, width, height, color):
     """
@@ -66,16 +59,14 @@ def draw_rect(x, y, width, height, color):
     (int) width, height : width and height from upmost left corner
     (int, int, int) color : you know
     """
-    # Define rectangle properties
     rect_x, rect_y = x, y
     rect_width, rect_height = width, height
     rect_color = color
-    # Draw the rectangle
     pygame.draw.rect(screen, rect_color, (rect_x, rect_y, rect_width, rect_height))
 
 def draw_calculator():
     """
-    Draws a naked calculator (without actual buttons).
+    Draws a bare calculator (without actual buttons).
     Call once per frame (at beginning), or when resetting the calculator.
     """
     # Base and screen
@@ -90,7 +81,12 @@ def draw_calculator():
     draw_rect(x = width*0.385, y = width*0.65, width = width*0.13, height = width*0.10, color = (127, 127, 127))
     draw_rect(x = width*0.545, y = width*0.65, width = width*0.13, height = width*0.10, color = (127, 127, 127))
 
-def talk(text): # Maybe update this for the text to look better
+def talk(text):
+    """
+    Draw a rudimentary text box at the bottom of the screen.
+
+    Definitely a lot of room for improvement here.
+    """
     while True:
 
         events = pygame.event.get()
@@ -112,7 +108,8 @@ def talk(text): # Maybe update this for the text to look better
 def play_level(n):
     """
     Will create a new game loop for the selected level
-    (parameter n for levelnumber)
+    
+    (int) `n` for levelnumber
     """
     with open("data/levels.json", "r") as file:
         data = json.load(file)  # Load JSON data from the file
@@ -144,7 +141,6 @@ def play_level(n):
             for x in range(button_count):
                 op = ops[x]
                 # Button text
-                # Yes we can make this nicer with lists and indices. But... uhh...
                 text = ""
                 if op[0] == "add":
                     text += "+"
@@ -183,7 +179,6 @@ def play_level(n):
 
                     moves -= 1
 
-            # Should we turn this into a function? yes. Is it worth it right now? no.
             # Number
             font = pygame.font.Font(None, round(width*0.13))
             text_surface = font.render(str(initial).zfill(4), True, (0,0,0))
@@ -214,8 +209,6 @@ def play_level(n):
             pygame.display.flip()
 
 
-# ----| MAIN GAME LOOP |----
-
 running = True
 while running: # In the future remove this loop. we already have game loops inside levels.
     for event in pygame.event.get():
@@ -226,7 +219,6 @@ while running: # In the future remove this loop. we already have game loops insi
     # Clear the screen
     screen.fill((50, 50, 50))  # Fill with dark gray
 
-    # Things to do once per frame
     draw_calculator()
     talk("Hello and wecome to the Calculator Game")
     talk("Reach the goal with the provided functions.")
@@ -237,7 +229,7 @@ while running: # In the future remove this loop. we already have game loops insi
         if x == 1:
             break
         else:
-            talk("That was a good one though.")
+            talk("Good one.")
     talk("Now for something a little more complete.")
     talk("Remember. Don't run out of moves!")
     x = 1
@@ -250,26 +242,5 @@ while running: # In the future remove this loop. we already have game loops insi
     pygame.display.flip()
 
 # Quit Pygame
-pygame.quit()
-sys.exit()
-
-def doSomething():
-    pass
-
-
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-
-    screen.fill((50, 50, 50))
-     
-    doSomething()
-
-    pygame.display.flip()
-
-
 pygame.quit()
 sys.exit()
